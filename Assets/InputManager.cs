@@ -20,14 +20,15 @@ public class InputManager : MonoBehaviour
 	
 	void Update(){
 		if(Input.anyKeyDown){
+			EventManager.instance.publisher.raiseEvent("KeyPressEvent");
 			Debug.Log("A key has been pressed");
 		}
 		if(Input.GetKeyDown(KeyCode.Mouse1)){
-			EventManager.instance.publisher.raiseEvent("KeyPressEvent");
+			EventManager.instance.publisher.unsubscribe("KeyPressEvent", this);
 		}
 		if(Input.GetKeyDown(KeyCode.Mouse0)){
 			EventManager.instance.publisher.addEvent("KeyPressEvent");
-			EventManager.instance.publisher.subscribeTo("KeyPressEvent",this, sampleFunc );
+			EventManager.instance.publisher.subscribeTo("KeyPressEvent",this, sampleFunc);
 		}
 	}
 	

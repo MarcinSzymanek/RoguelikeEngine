@@ -91,7 +91,6 @@ namespace GridEngine{
 					eventList[name].eventPublisher += newSub;
 					subCount++;
 					subscriber sub = new subscriber(newSub, ID);
-	
 					subscriberList[name].Add(sub);
 					Debug.Log("Succesfully added subscriber");				
 				}
@@ -104,6 +103,8 @@ namespace GridEngine{
 				int index = findSubscriber(name, ID);
 				if(index > -1){
 					eventList[name].eventPublisher -= subscriberList[name][index].handler;
+					subscriberList[name].RemoveAt(index);
+					Debug.Log("Succesfully unsubscribed");
 					return true;
 				}
 				return false;
