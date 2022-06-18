@@ -1,56 +1,76 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 using GameState = GameManager.GameState;
 
 
 public class InputManager : MonoBehaviour
 {
+	PlayerInput controls;
+	InputActionMap gameplayActions;
+	InputActionMap menuActions;
+	InputActionMap inventoryActions;
+	
+	InputAction inputMove;
+	
 	MainGameInput m_gameInput;
 	PauseInput m_pauseInput;
 	InventoryInput m_inventoryInput;
-	
-	int subId;
-
-	void Start(){
-		EventManager.instance.publisher.addEvent("KeyPressEvent");
-		EventManager.instance.publisher.subscribeTo("KeyPressEvent",this, sampleFunc );
-	}
-	
-	void Update(){
-		if(Input.anyKeyDown){
-			EventManager.instance.publisher.raiseEvent("KeyPressEvent");
-			Debug.Log("A key has been pressed");
-		}
-		if(Input.GetKeyDown(KeyCode.Mouse1)){
-			EventManager.instance.publisher.unsubscribe("KeyPressEvent", this);
-		}
-		if(Input.GetKeyDown(KeyCode.Mouse0)){
-			EventManager.instance.publisher.addEvent("KeyPressEvent");
-			EventManager.instance.publisher.subscribeTo("KeyPressEvent",this, sampleFunc);
-		}
-	}
+	PlayerController playerController;
+	CharacterComponent charComponent;
 	
 	GameState m_currentGameState;
 	
-	public enum InputKey{
-		INP_UP,
-		INP_DOWN,
-		INP_LEFT,
-		INP_RIGHT
+	int subId;
+
+	void Awake(){
+		playerController = GetComponent<PlayerController>();
+		GameObject player = GameObject.Find("Player");
+		charComponent = player.GetComponent<CharacterComponent>();
+		controls = GetComponent<PlayerInput>();
+		gameplayActions = controls.actions.FindActionMap("Gameplay");
+		inputMove = gameplayActions.FindAction("Move");		
 	}
+
+	void Start(){
+		inputMove.performed += OnMove;
+	}
+	
+	
+	private void OnMove(InputAction.CallbackContext context){
+		Debug.Log("Move key pressed");
+		Debug.Log(context.ReadValueAsObject());
+		Vector2 direction = (Vector2)context.ReadValueAsObject();
+		
+		// In manhattan controls diagonals are not permitted, so refuse input
+		if(direction.x != 0 && direction.y != 0){
+			return;
+		}
+		MoveAction moveAction = new MoveAction(charComponent, direction);
+		playerController.triggerAction(moveAction);
+	}
+	
+	void Update(){
+	
+	}
+	
+	
 	
 	void sampleFunc(){
 		Debug.Log("Sample handler triggered");
 	}
 	
-	public void processInput(GameState g_state, InputKey i_key){
-		m_currentGameState = g_state;
-		switch(g_state)
+	public void processInput(){
+		m_currentGameState = GameManager.instance.m_gameState;
+		switch(m_currentGameState)
 		{
 		case GameState.MAIN:
-			m_gameInput.processInput(i_key);
+			if(Input.GetKeyDown(KeyCode.UpArrow)){
+				MoveAction moveAction = new MoveAction(charComponent, new Vector2Int(0, 1));
+				playerController.triggerAction(moveAction);
+			}
 			break;
 		case GameState.INVENTORY:
 			// TODO inventory input
@@ -63,7 +83,7 @@ public class InputManager : MonoBehaviour
 	
 	
 	private class MainGameInput{
-		MovementFourDir m_movement;	
+		/*MovementFourDir m_movement;	
 		
 		public void processInput(InputKey i_key){
 			switch(i_key)
@@ -81,7 +101,7 @@ public class InputManager : MonoBehaviour
 				m_movement.startMove(new Vector2Int(-1,  0));
 				break;
 			}
-		}
+		}*/
 	}
 	
 	private class PauseInput{
@@ -90,5 +110,13 @@ public class InputManager : MonoBehaviour
 	
 	private class InventoryInput{
 		
+	}
+	
+	void MapControls(){
+		
+	}
+	
+	void SetupInputEvents(){
+		//EventManager.instance.publisher.addEvent("")
 	}
 }

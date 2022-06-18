@@ -60,12 +60,13 @@ namespace GridEngine{
 			public bool raiseEvent(string name){
 				if(checkEventExists(name)){
 					if(eventList[name].checkNotEmpty()){
+						// Debug.Log("Event " + name + " raised!");
 						eventList[name].onEvent();
-						Debug.Log("Event " + name + " raised!");
 						return true;
 					}
+					Debug.Log("Event list empty!");
 				}
-				Debug.Log("Could not raise event");
+				Debug.Log("Could not raise event " + name);
 				return false;
 			}
 			

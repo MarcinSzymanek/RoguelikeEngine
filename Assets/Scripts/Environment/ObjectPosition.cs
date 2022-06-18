@@ -8,23 +8,32 @@ public class ObjectPosition : MonoBehaviour
 {
 	[SerializeField]
 	Vector2Int gridPos{get; set;}
-	
 	[SerializeField]
 	bool isStatic, isBlocking;
+	[SerializeField]
+	public float offset_x;
+	public float offset_y;
+	private GridLayout grid;
 	
-	// Start is called on the frame when a script is enabled just before any of the Update methods is called the first time.
-	protected void Awake()
-	{
-
+	void Awake(){
+		grid = GameObject.Find("Grid").GetComponent<Grid>();
+		updateGridPosition();
 	}
 	
-	public Vector2Int getGridPos(){
+	public Vector2Int GetGridPos(){
 		return gridPos;
 	}
 	
+	public Vector2 GetCenterPos(){
+		Transform tf = gameObject.transform;
+		return new Vector2(tf.position.x + 0.5f + offset_x, tf.position.y + 0.5f + offset_y);
+	}
+	
 	public void updateGridPosition(){
-		gridPos = new Vector2Int((int)Mathf.Floor(transform.position.x - 0.5f), (int)Mathf.Floor(transform.position.y - 0.5f));
+		Vector2Int oldPos = gridPos;
+		gridPos = (Vector2Int)grid.WorldToCell(transform.position);
 		LevelManager.instance.addBlockedCell(gridPos);
+		LevelManager.instance.removeBlocked(oldPos);
 	}
 	
 	public void CenterObject(){
@@ -37,9 +46,9 @@ public class ObjectPosition : MonoBehaviour
 		
 		double newx, newy;
 		
-		// Tile centers in the grid when it's at no + 0.5
-		newx = Mathf.Floor((float)x) + 0.5;
-		newy = Mathf.Floor((float)y) + 0.5;
+		// Tile centers in the grid when it's at no + 0.5 + offset
+		newx = Mathf.Floor((float)x) + 0.5 + offset_x;
+		newy = Mathf.Floor((float)y) + 0.5 + offset_y;
 		
 		tf.position = new Vector3((float)newx, (float)newy, -1);
 		GetComponent<BoxCollider2D>().enabled = true;

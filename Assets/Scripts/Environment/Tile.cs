@@ -13,28 +13,6 @@ public class Tile : MonoBehaviour
 	}
 	
 	public void InitTile(){
-		int ID = Random.Range(0, MAX_TILES);
-		GameObject levelEd = GameObject.Find("LevelEditor");
-		if(levelEd == null){
-			Debug.Log("Couldn't find LevelEditor.");
-			return;
-		}
-		
-		bool IDaccepted = false;
-		while(IDaccepted == false){
-			if(levelEd.GetComponent<TileEdit>().addTileData(ID)){
-				tileID = ID;
-				IDaccepted = true;
-			}
-			else{
-				if(ID + 1 == 2000){
-					ID = Random.Range(0, MAX_TILES);
-				}
-				else{
-					ID++;
-				}
-			}
-		}
 	}
 	
 	

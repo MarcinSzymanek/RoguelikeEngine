@@ -7,7 +7,7 @@ public class GameManager : GridEngine.Singleton<GameManager>
 {
 	TurnManager m_turnManager;
 	InputManager m_inputManager;
-	GameState m_gameState;
+	public GameState m_gameState;
 	bool blockActionInput;
 	UnityEvent event_input;
 	
@@ -22,24 +22,27 @@ public class GameManager : GridEngine.Singleton<GameManager>
 		ENEMY_TURN
 	}
 	
-    // Start is called before the first frame update
-    void Start()
-	{
+	void OnEnable(){
+		EventManager.instance.publisher.addEvent("TurnPlayer");
+		EventManager.instance.publisher.addEvent("TurnEnemy");
+	}
+	
+	void Start(){
 		m_inputManager = GetComponent<InputManager>();
 		m_turnManager = new TurnManager();
 		m_turnManager.initTurnManager();
-		//event_input.AddListener(sendInput);
-    }
+	}
+	
+	public void NextTurn(){
+		m_turnManager.NextTurn();
+	}
+    
 
     // Update is called once per frame
     void Update()
     {
         
     }
-    
-	void sendInput(InputManager.InputKey i_key){
-		m_inputManager.processInput(m_gameState, i_key);
-	}
     
 	private class TurnManager
 	{
@@ -54,16 +57,27 @@ public class GameManager : GridEngine.Singleton<GameManager>
 			turnCount = 0;
 		}
 		
-		public void endPlayerTurn(){
+		public void NextTurn(){
 			// Display "Enemy turn"
 			// Progress buffs/debuffs/effects
 			// Perhaps calculate enemy turn order
 			// Calculate enemy AI movement/actions
 			// Progress enemy actions
 			// at the end call event_enemyEndTurn
-			currentTurn = Turn.ENEMY_TURN;
+			if(currentTurn == Turn.ENEMY_TURN){
+				currentTurn = Turn.PLAYER_TURN;
+				Debug.Log("Player Turn");
+				EventManager.instance.publisher.raiseEvent("TurnPlayer");
+			}
+			else{
+				currentTurn = Turn.ENEMY_TURN;
+				Debug.Log("Enemy Turn");
+				EventManager.instance.publisher.raiseEvent("TurnEnemy");
+			}
 			turnCount++;
 		}
+		
+	
 	
 	}
 }
