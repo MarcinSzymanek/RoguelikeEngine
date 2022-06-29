@@ -7,7 +7,6 @@ public class Tile : MonoBehaviour
 {
 	
 	public int tileID = 0;
-	static int MAX_TILES = 2000;
 	public void Start(){
 			
 	}

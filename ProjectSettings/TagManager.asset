@@ -4,10 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - enemy
-  - player
-  - wall
-  - ground
+  - Enemy
+  - Wall
+  - Ground
   layers:
   - Default
   - TransparentFX
