@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Attributes : MonoBehaviour
+[System.Serializable]
+public class Attributes
 {
+	
 	private int _health;
 	private int _attack;
 	private int _armour;
@@ -17,20 +19,11 @@ public class Attributes : MonoBehaviour
 		_armour = arm;
 	}
 	
-	public void TakeDamage(GameObject source, int damage){
+	public int ApplyDamage(int damage, out int health){
 		int finalDamage = damage - _armour;
 		_health -= finalDamage;
+		Debug.Log("Health: " + _health.ToString() + " Dmg = " + finalDamage.ToString());
+		health = _health;
+		return finalDamage;
 	}
-	
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

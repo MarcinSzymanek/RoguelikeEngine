@@ -6,89 +6,58 @@ public class CharacterComponent : MonoBehaviour
 {
 	// This is a character, it must be interactable in some way and/or have Actions it can perform
 	private ObjectPosition objPos;
-	private Attributes attributes;
-	
-	[SerializeField] public bool canMove{get; set;}
-	private float _speed = 2f;
-	
-	[SerializeField] List<Action> UnitActions;
-	private bool isPlayer;
-	
-	public void SetSpeed(float amount){
-		_speed = amount;
+	private new CharacterAudio audio;
+	[SerializeField] private Attributes _attributes;
+	[SerializeField] private UnitData charData;
+	[SerializeField] private bool _canMove;
+
+	public void SetMove(bool val){
+		_canMove = val;
 	}
+
+	private bool _isPlayer;
 	
 	protected void Awake()
 	{
-		if(gameObject.tag == "Player"){
-			isPlayer = true;
-		}
-		else{
-			isPlayer = false;
-		}
+		audio = GetComponent<CharacterAudio>();
+		audio.SetAudio(audio.audioMovement, charData.GetSounds().onWalk);
 		
 		objPos = GetComponent<ObjectPosition>();
-		attributes = GetComponent<Attributes>();
-		attributes.InitAttributes(40, 5, 0);
-		canMove = true;
+		_attributes = new Attributes();
+		_attributes.InitAttributes(charData.defaultHp, charData.defaultAttack, charData.defaultArmour);
+		
+		GetComponent<Equipment>().equippedWeapon = charData.defaultWeapon;
+		SetMove(true);
 	}
 	
 	public Vector2Int GetPosition(){
 		return objPos.GetGridPos();
 	}
 	
-	// Checks whether a move is valid, before moving the character
-	public void TryMove(Vector2 dir){
-		canMove = false;
-		Vector2Int destination = GetPosition() + Vector2Int.RoundToInt(dir);
-		if(LevelManager.instance.isBlocked(destination)){
-			Debug.Log("Something is blocking the path!");
-			canMove = true;
-			return;
+	public int OnAttacked(Transform source, int attack){
+		int endHealth;
+		Debug.Log(name + " attacked for " + attack.ToString());
+		int finalDmg = _attributes.ApplyDamage(attack, out endHealth);
+		Debug.Log(transform.name + " took " + finalDmg.ToString() + ". Current health: " + endHealth.ToString());
+		if(endHealth < 1){
+			OnZeroHp();
 		}
-		
-		
-		Debug.Log("Initiating move");
-		Vector3 realDir = dir;
-		InitiateMove(dir);
+		return endHealth;
+		// Play damaged sfx, apply other effects, buffs/debuffs. Retaliation effects?
+		// Log the attack in debug
 	}
 	
-	private void InitiateMove(Vector3 dir){
-		StartCoroutine(MoveRoutine(dir));
+	private void OnZeroHp(){
+		// Character dies... unless it has extra lives or ressurection, deathdoor gate etc
+		Transform corpse = transform.Find("Corpse");
+		corpse.SetParent(transform.parent);
+		corpse.gameObject.SetActive(true);
+		AudioSource sound = corpse.GetComponent<AudioSource>();
+		sound.PlayOneShot(sound.clip);
+		gameObject.SetActive(false);
 	}
 	
-	IEnumerator MoveRoutine(Vector3 direction){
-		Vector3 position = transform.position;
-		Vector3 destination = (transform.position + direction);
-		Debug.Log("Position = " + position + " Destinaton = " + destination);
-		float distance = CalcDistance(position, destination);
-		float prevDistance = distance;
-		AudioManager.instance.AddAudio(this.gameObject, "SFX_walking");
-		while(distance >= 0.01f){
-			transform.Translate(direction * Time.deltaTime * _speed);
-			distance = CalcDistance(transform.position, destination);
-			if(prevDistance <= distance){
-				distance = 0f;
-			}
-			prevDistance = distance;
-			yield return null;
-		}
-		
-		objPos.updateGridPosition();
-		objPos.CenterObject();
-		AudioManager.instance.RemoveAudio(this.gameObject, "SFX_walking");
-		Debug.Log("MOVE COMPLETE");
-		if(isPlayer){
-			GameManager.instance.NextTurn();
-		}
-		canMove = true;
+	public Attributes GetAttributes(){
+		return _attributes;
 	}
-	
-	private float CalcDistance(Vector3 pos1, Vector3 pos2){
-		float distX = Mathf.Abs(pos1.x - pos2.x);
-		float distY = Mathf.Abs(pos1.y - pos2.y);
-		return Mathf.Sqrt(Mathf.Pow(distX, 2) + Mathf.Pow(distY, 2));
-	}
-	
-	
 }

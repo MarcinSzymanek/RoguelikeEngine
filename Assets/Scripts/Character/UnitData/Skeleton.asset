@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88793aab771780947b8dea302a3ecd9f, type: 3}
+  m_Name: Skeleton
+  m_EditorClassIdentifier: 
+  name: Skeleton
+  description: Usually it keeps the body from falling apart, but this one seems to
+    have a different agenda.
+  _defaultHp: 20
+  _defaultAttack: 3
+  _defaultArmour: 1
+  _defaultWeapon: {fileID: 11400000, guid: 3736e3357258b95478738bb1d21bb191, type: 2}
+  spriteNormal: {fileID: 7729768860333772239, guid: 1cdc8045e618b0f40a3da7a27d181e42, type: 3}
+  spriteDead: {fileID: 21300000, guid: f30b263e06bcf6141a868fd82a0e3b77, type: 3}
+  charSounds:
+    onDamage: {fileID: 0}
+    onDeath: {fileID: 8300000, guid: 1d912657251d36246aaeb31a69dc1350, type: 3}
+    onWalk: {fileID: 8300000, guid: 2815237d4b9b7d1469a8849cb98a5e83, type: 3}
+    onAttack: {fileID: 0}
