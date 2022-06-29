@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88793aab771780947b8dea302a3ecd9f, type: 3}
+  m_Name: Human
+  m_EditorClassIdentifier: 
+  name: Human
+  description: A perfectly boring human being
+  _defaultHp: 40
+  _defaultAttack: 1
+  _defaultArmour: 0
+  _defaultWeapon: {fileID: 11400000, guid: 3736e3357258b95478738bb1d21bb191, type: 2}
+  spriteNormal: {fileID: -4256427906160430202, guid: 1cdc8045e618b0f40a3da7a27d181e42, type: 3}
+  spriteDead: {fileID: 0}
+  charSounds:
+    onDamage: {fileID: 0}
+    onDeath: {fileID: 0}
+    onWalk: {fileID: 8300000, guid: 0488b2b409a52964da77c4d1f927465e, type: 3}
+    onAttack: {fileID: 0}
