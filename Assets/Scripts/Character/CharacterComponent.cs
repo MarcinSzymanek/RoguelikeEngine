@@ -10,6 +10,10 @@ public class CharacterComponent : MonoBehaviour
 	[SerializeField] private Attributes _attributes;
 	[SerializeField] private UnitData charData;
 	[SerializeField] private bool _canMove;
+	[SerializeField]
+	private AIBase _AIComponent;
+
+	public IAIComponent GetAIComponent(){return _AIComponent as IAIComponent;}
 
 	public void SetMove(bool val){
 		_canMove = val;
@@ -21,7 +25,12 @@ public class CharacterComponent : MonoBehaviour
 	{
 		audio = GetComponent<CharacterAudio>();
 		audio.SetAudio(audio.audioMovement, charData.GetSounds().onWalk);
-		
+		if(charData.AItype != AITypes.AIType.NONE)
+		{
+			Debug.Log("Character AIType = " + charData.AItype.ToString());
+			_AIComponent = CharacterBuilder.ChooseAI(charData.AItype, transform);
+			Debug.Log("Chosen AI Component : " + _AIComponent.ToString());
+		}
 		objPos = GetComponent<ObjectPosition>();
 		_attributes = new Attributes();
 		_attributes.InitAttributes(charData.defaultHp, charData.defaultAttack, charData.defaultArmour);

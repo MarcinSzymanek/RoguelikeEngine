@@ -2,21 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class AIManager : MonoBehaviour
 {
 	[SerializeField]
-	List<AIEnemy> enemyList;
+	List<IAIComponent> enemyList;
     
 	void Awake(){
-		enemyList = new List<AIEnemy>();
+		enemyList = new List<IAIComponent>();
 	}
 	
 	// Start is called before the first frame update
     void Start()
 	{
-		AIEnemy[] chars = GameObject.Find("Characters").GetComponentsInChildren<AIEnemy>();
-		foreach(AIEnemy enemy in chars){
-			enemyList.Add(enemy);
+		CharacterComponent[] chars = GameObject.Find("Characters").GetComponentsInChildren<CharacterComponent>();
+		foreach(CharacterComponent enemy in chars){
+			IAIComponent ai = enemy.GetAIComponent();
+			if(ai != null){
+				Debug.Log("Added ai component to ai manager");
+				enemyList.Add(enemy.GetAIComponent());
+			}
 		}
 		
 		EventManager.instance.publisher.subscribeTo("TurnEnemy", this, ProcessEnemyTurn);
@@ -29,12 +34,12 @@ public class AIManager : MonoBehaviour
     }
     
 	public void ProcessEnemyTurn(){
-		foreach(AIEnemy enemy in enemyList){
-			enemy.CalculateAction();
+		foreach(IAIComponent enemy in enemyList){
+			enemy.CalculateNextAction();
 		}
 		
-		foreach(AIEnemy enemy in enemyList){
-			enemy.ProcessAction();
+		foreach(IAIComponent enemy in enemyList){
+			enemy.ProcessQueuedAction();
 		}
 		GameManager.instance.NextTurn();
 	}

@@ -10,8 +10,8 @@ public class AttackAction : Action, IAction
 	bool _endsTurn;
 	string _logMsg;
 	
-	public bool endsTurn{get => _endsTurn; set=> _endsTurn = value;}
-	public string logMsg{get => _logMsg;}
+	public bool EndsTurn{get => _endsTurn; set=> _endsTurn = value;}
+	public string LogMsg{get => _logMsg;}
 	
 	public AttackAction(Transform actor, Transform target, int attack){
 		_actorTf = actor;

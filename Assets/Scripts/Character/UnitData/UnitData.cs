@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor.Animations;
 
 [CreateAssetMenu(fileName = "New Character", menuName = "Character")]
 public class UnitData : ScriptableObject
@@ -17,8 +18,12 @@ public class UnitData : ScriptableObject
 	public int defaultArmour{get => _defaultArmour;}
 	public WeaponData defaultWeapon{get => _defaultWeapon;}
 	
+	public AnimatorController animController;
+	
 	public Sprite spriteNormal;
 	public Sprite spriteDead;
+	
+	[SerializeField] public AITypes.AIType AItype;
 	
 	[SerializeField]
 	Sounds charSounds;

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public interface IAction 
 {
-	bool endsTurn{get; set;}
-	string logMsg{get;}
+	bool EndsTurn{get; set;}
+	string LogMsg{get;}
 	void Execute();
 	void Undo();
 }

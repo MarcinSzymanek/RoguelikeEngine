@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class Movement : Abillity
 {
@@ -10,9 +11,10 @@ public class Movement : Abillity
 	private ObjectPosition _objPos;
 	private AudioSource _audioMove;
 	private string _SFXfootsteps = "SFX_walking";
+	private Animator _animator;
 	
 	private void Awake(){
-		_playerController = FindObjectOfType<PlayerController>();
+		_animator = GetComponent<Animator>();
 		_charAudio = GetComponent<CharacterAudio>();
 		_objPos = GetComponent<ObjectPosition>();
 		_animationSpeed = SPEED;
@@ -32,6 +34,13 @@ public class Movement : Abillity
 	public void InitiateMove(Vector2 direction){
 		_audioMove.PlayOneShot(_audioMove.clip);
 		Vector3 v3dir = direction;
+		Vector2Int directionInt = Vector2Int.RoundToInt(direction);
+		if(direction.x != 0){
+			_animator.SetInteger("DirectionHorizontal", directionInt.x);
+		}
+		else{
+			_animator.SetInteger("DirectionVertical", directionInt.y);
+		}
 		StartCoroutine(MoveRoutine(v3dir));
 	}
 	
@@ -58,7 +67,8 @@ public class Movement : Abillity
 	protected override void Finish(){
 		_objPos.updateGridPosition();
 		_objPos.CenterObject();
-	
+		_animator.SetInteger("DirectionVertical", 0);
+		_animator.SetInteger("DirectionHorizontal", 0);
 		Debug.Log("MOVE COMPLETE");
 		
 		if(endsTurn){

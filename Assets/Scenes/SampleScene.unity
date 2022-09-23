@@ -1694,7 +1694,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.79927, y: 1}
+    m_SensorSize: {x: 1.54927, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -2061,6 +2061,10 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: 1933547269
       objectReference: {fileID: 0}
+    - target: {fileID: 2683722401959242164, guid: 8699df00bc650a343982b6a7207e3264, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2772855807724777086, guid: 8699df00bc650a343982b6a7207e3264, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -2125,14 +2129,40 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5452066315783259876, guid: 8699df00bc650a343982b6a7207e3264, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8699df00bc650a343982b6a7207e3264, type: 3}
 --- !u!1 &1032178503 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5740401957811061971, guid: 8699df00bc650a343982b6a7207e3264, type: 3}
   m_PrefabInstance: {fileID: 1032178502}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1032178504
+--- !u!4 &1032178505 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7443774802758333755, guid: 8699df00bc650a343982b6a7207e3264, type: 3}
+  m_PrefabInstance: {fileID: 1032178502}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1032178513
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032178503}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b715363dd4c0b184789ae80dc5577b25, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1032178520
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2141,16 +2171,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1032178503}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 908aa3dc9bc22124d98bc897b036c23d, type: 3}
+  m_Script: {fileID: 11500000, guid: cb2a04b08979b5c43bd05f2bd65651dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _AI: {fileID: 0}
-  _charComp: {fileID: 0}
---- !u!4 &1032178505 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7443774802758333755, guid: 8699df00bc650a343982b6a7207e3264, type: 3}
-  m_PrefabInstance: {fileID: 1032178502}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1069553032
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2241,7 +2264,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7fb1120f8a0c9e47bf8c7e37b106418, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyList: []
 --- !u!4 &1095963068
 Transform:
   m_ObjectHideFlags: 0
@@ -2810,7 +2832,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb2a04b08979b5c43bd05f2bd65651dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  equippedWeapon: {fileID: 0}
 --- !u!114 &1384546928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2824,6 +2845,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponData: {fileID: 11400000, guid: 3736e3357258b95478738bb1d21bb191, type: 2}
+--- !u!95 &1384546929
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1384546909}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 661123ef8b5c2dd4688173bdc61b94ff, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!4 &1398590762 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7942904815439620805, guid: 10ef4767c8902274fa8cf5f42708b3db, type: 3}

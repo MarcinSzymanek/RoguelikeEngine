@@ -18,8 +18,10 @@ MonoBehaviour:
   _defaultAttack: 1
   _defaultArmour: 0
   _defaultWeapon: {fileID: 11400000, guid: 3736e3357258b95478738bb1d21bb191, type: 2}
+  animController: {fileID: 9100000, guid: 661123ef8b5c2dd4688173bdc61b94ff, type: 2}
   spriteNormal: {fileID: -4256427906160430202, guid: 1cdc8045e618b0f40a3da7a27d181e42, type: 3}
   spriteDead: {fileID: 0}
+  AItype: 2
   charSounds:
     onDamage: {fileID: 0}
     onDeath: {fileID: 0}

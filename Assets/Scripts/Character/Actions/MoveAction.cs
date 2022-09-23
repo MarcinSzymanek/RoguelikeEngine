@@ -6,9 +6,9 @@ public class MoveAction : Action, IAction
 {
 	private string _logMsg;
 	
-	public string logMsg{get => _logMsg;}
+	public string LogMsg{get => _logMsg;}
 	
-	public bool endsTurn{get; set;}
+	public bool EndsTurn{get; set;}
 	
 	public MoveAction(Transform tf, Vector2 dir){
 		_actorTf = tf;
